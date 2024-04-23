@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet">
+    <link href="profile.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito&family=Poppins&family=Young+Serif&display=swap"
+        rel="stylesheet">
+    <script>
+        function openForm() {
+        document.getElementById("edit-form").style.display = "block";
+        }
+
+        function openEditForm(e) {
+            let targetElement = e.parentNode.parentNode;
+            let topic = (targetElement.childNodes[1].childNodes[1].innerText);
+            let assignee = (targetElement.childNodes[1].childNodes[5].childNodes[1].innerText)
+            let content = (targetElement.childNodes[3].childNodes[1].innerText)
+            var topicInfo = document.getElementById("topic")
+            var contentInfo = document.getElementById("content")
+            var assigneeInfo = document.getElementById("assigneeSpan")
+            topicInfo.innerHTML = topic
+            contentInfo.innerHTML = content
+            assigneeInfo.innerHTML = assignee
+            document.getElementById("myForm").style.display = "block";
+            document.getElementById("nav-background").style.filter = "blur(5px)";
+            var mainBackgroundElements = document.getElementsByClassName("main-background");
+            for (var i = 0; i < mainBackgroundElements.length; i++) {
+                mainBackgroundElements[i].style.filter = "blur(5px)";
+            }
+        }
+
+        function closeForm() {
+        document.getElementById("edit-form").style.display = "none";
+        }
+
+        function closeEditForm() {
+            document.getElementById("myForm").style.display = "none";
+            document.getElementById("nav-background").style.filter = "none";
+            var mainBackgroundElements = document.getElementsByClassName("main-background");
+            for (var i = 0; i < mainBackgroundElements.length; i++) {
+                mainBackgroundElements[i].style.filter = "none";
+            }
+        }
+
+         function openFormAssign() {
+            document.getElementById("getAssignee").style.display = "block";
+        }
+
+        function closeFormAssign() {
+            document.getElementById("getAssignee").style.display = "none";
+        }
+
+        function selectAssignee(assignee) {
+            document.getElementById('assigneeInput').value = assignee;
+            var assigneeInfo = document.getElementById("assigneeSpan")
+            assigneeInfo.innerHTML = assignee
+        }
+    </script>
+</head>
+
+<body>
+<nav id="nav-background">
+    <div id="logo">
+        <a href="/index.html">
+            <img src="logo.png">
+        </a>
+    </div>
+    <div>
+    </div>
+    <div id="nav-buttons">
+       <button>My Drafts</button>
+       <a href="/by_me">
+           <button>My Posts</button>
+       </a>
+       <a href="/about_me">
+           <button>Reviews About Me</button>
+       </a>
+       <button class="open-button" onclick="openForm()">Edit Account</button>
+       <a href="/signout">
+            <button>Sign Out</button>
+       </a>
+    </div>
+</nav>
+            <div class="account main-background">
+            <h1>My Account</h1>
+            <div class="line-break">
+                <p>Info</p>
+                <hr>
+            </div>
+                <div id="main_acc">
+                    <h2 class="account_item">{{user['full_name']}}</h2>
+                    <p class="account_item">{{user['username']}}</p>
+                    <address class="account_item">{{user['email']}}</address>
+                </div>
+                <div class="line-break">
+                    <p>Stats</p>
+                    <hr>
+                </div>
+                <div id="stat-content">
+                    <p>Team {{user['team']}}</p>
+                </div>
+            </div>
+
+            <form action="/edit_user" class="form-container" method="POST" id="edit-form" class="main-background">
+                <h2>Edit Details</h2>
+                <div id = "edit-user-items">
+                    <div>
+                    <label for="first"><b>First Name</b></label>
+                    <input type="text" placeholder="Enter First Name" name="first">
+                    </div>
+                    <div>
+                    <label for="last"><b>Last Name</b></label>
+                    <input type="text" placeholder="Enter Last Name" name="last">
+                    </div>
+                    <div>
+                    <label for="user"><b>Username</b></label>
+                    <input type="text" placeholder="Enter New Username" name="user">
+                    </div>
+                    <div>
+                    <label for="pwd"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw">
+                    </div>
+                </div>
+                <div id="edit-user-buttons">
+                    <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+                    <button type="submit" class="btn">Save</button>
+                </div>
+            </form>
+        </div>
+        </div>
+     <div id="review_page" class="main-background">
+                % for draft in drafts:
+                <article class="review_post" style="width: 400px;">
+                    <header>
+                        <h3 class="review_item">{{draft['topic']}}</h3>
+                        <div class="date">
+                            <aside>{{draft['date']}}</aside>
+                        </div>
+                        <div class="written_about">
+                            <p>for: {{draft['assignee']}}</p>
+                            <p>rating: {{draft['rating']}}</p>
+                        </div>
+                    </header>
+                    <main>
+                        <p class="review_item">{{draft['content']}}</p>
+                    </main>
+                    <footer>
+                        <div>
+                            <p>Author:</p>
+                            <p>{{draft['author']}}</p>
+                        </div>
+                        <button onclick="openEditForm(this)" id="edit-draft">✎</button>
+                    </footer>
+                </article>
+                %end
+            </div>
+<div class="form-popup" id="myForm">
+        <form action="/edit_review" method="POST" class="form-container">
+            <h2>Edit Review</h2>
+            <div id="form-items">
+                <div id="topic-assignee">
+                    <div>
+                        <label><b>Topic</b></label>
+                        <textarea type="text" placeholder="Enter Topic" name="topic" id="topic" required></textarea>
+                    </div>
+                    <div id="assignee">
+                        <label><b>Assignee</b></label>
+                        <input type="hidden" id="assigneeInput" name="assignee" value="">
+                        <button id="assigness-button" type="button" name="assignee" onclick="openFormAssign()">
+                            <span id="assigneeSpan">Assign...</span></button>
+                    </div>
+                </div>
+                <div>
+                    <label><b>Content</b></label>
+                    <textarea type="text" placeholder="Start Writing Here..." name="content" id="content"required></textarea>
+                </div>
+                <div id="rating-system">
+                <p>Rating Out of 5:</p>
+                <div class="rating-system2">
+                  <input type="radio" name='rating' value="5" class ="star" id="star5_2" />
+                  <label class="star-label" for="star5_2"></label>
+
+                  <input type="radio" name='rating' value="4" id="star4_2" class ="star"/>
+                  <label class="star-label" for="star4_2"></label>
+
+                  <input type="radio" name='rating' value="3" id="star3_2" class ="star"/>
+                  <label class="star-label" for="star3_2"></label>
+
+                  <input type="radio" name='rating' value="2" id="star2_2" class ="star"/>
+                  <label class="star-label" for="star2_2"></label>
+
+                  <input type="radio" name='rating' value="1" id="star1_2" class ="star" required/>
+                  <label class="star-label" for="star1_2"></label>
+
+                  <div class="text"></div>
+                </div>
+                </div>
+                <div>
+                    <div id="form-buttons">
+                        <button type="button" class="btn cancel" onclick="closeEditForm()">Cancel</button>
+                        <div id="draft">
+                        <input type="checkbox" name="draft">
+                        <p>Save as draft?</p>
+                        </div>
+                        <button type="submit" class="btn">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+<div id="getAssignee">
+        <div id="assign-container">
+            <input type="text" placeholder="Search..." name="search-assign" required>
+            <div id="checkbox-container">
+                 % for account in all_users:
+                <div id="assign-checkbox">
+                    <input type="radio" name="assignee" value="{{ account.full_name }}" id="assignee-{{ account.full_name }}" onclick="selectAssignee('{{ account.full_name }}')">
+                    <label for="assignee-{{ account.full_name }}">{{ account.full_name }}</label>
+                </div>
+                 % end
+            </div>
+            <div id="assign-buttons">
+                <button type="button" class="btn cancel" onclick="closeFormAssign()">Ok</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

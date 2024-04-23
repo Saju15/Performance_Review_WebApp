@@ -1,0 +1,38 @@
+[
+  {
+    "first_name": "Harry",
+    "last_name": "Potter",
+    "full_name": "Harry Potter",
+    "email": "harry@hogwarts.com",
+    "username": "theboywholived",
+    "password": "expelliarmus",
+    "team": "Gryffindor"
+  },
+  {
+    "first_name": "Hermione",
+    "last_name": "Granger",
+    "full_name": "Hermoine Granger",
+    "email": "hermione@hogwarts.com",
+    "username": "brightestwitch",
+    "password": "wingardiumleviosa",
+    "team": "Gryffindor"
+  },
+  {
+    "first_name": "Ron",
+    "last_name": "Weasley",
+    "full_name": "Ron Weasley",
+    "email": "ron@hogwarts.com",
+    "username": "ron_weasley",
+    "password": "scabbers",
+    "team": "Gryffindor"
+  },
+  {
+    "first_name": "Draco",
+    "last_name": "Malfoy",
+    "full_name": "Draco Malfoy",
+    "email": "draco@hogwarts.com",
+    "username": "purebloodprince",
+    "password": "slytherin",
+    "team": "Slytherin"
+  }
+]

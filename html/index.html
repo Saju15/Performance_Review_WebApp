@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito&family=Poppins&family=Young+Serif&display=swap"
+        rel="stylesheet">
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+            document.getElementById("nav-background").style.filter = "blur(5px)";
+            document.getElementById("main-background").style.filter = "blur(5px)";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+            document.getElementById("nav-background").style.filter = "none";
+            document.getElementById("main-background").style.filter = "none";
+            document.getElementById("getAssignee").style.display = "none";
+        }
+
+        function openFormAssign() {
+            document.getElementById("getAssignee").style.display = "block";
+        }
+
+        function closeFormAssign() {
+            document.getElementById("getAssignee").style.display = "none";
+        }
+
+        function selectAssignee(assignee) {
+            document.getElementById('assigneeInput').value = assignee;
+            var assigneeInfo = document.getElementById("assigneeSpan");
+            assigneeInfo.style.color = "#2D2D2D";
+            assigneeInfo.innerHTML = assignee;
+        }
+
+        function saveFilterSelection() {
+            var selectedFilter = document.getElementById('filter').value;
+            localStorage.setItem('selectedFilter', selectedFilter);
+            document.getElementById('filter-form').submit();
+        }
+
+        function saveTopicSelection() {
+            var selectedTopic = document.getElementById('topic-select').value;
+            localStorage.setItem('selectedTopic', selectedTopic);
+            document.getElementById('topic-select-form').submit();
+        }
+
+        function openTopicForm() {
+            event.preventDefault();
+            document.getElementById('add-topic-form').style.display='block';
+        }
+
+        function closeTopicForm() {
+            document.getElementById('add-topic-form').style.display='none';
+        }
+
+        window.onload = function() {
+            var selectedFilter = localStorage.getItem('selectedFilter');
+            var selectedTopic = localStorage.getItem('selectedTopic');
+            if (selectedFilter) {
+                document.getElementById('filter').value = selectedFilter;
+            }
+            if (selectedTopic) {
+                document.getElementById('topic-select').value = selectedTopic;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="background-content" id="nav-background">
+        <nav>
+            <div>
+            </div>
+            <div id="logo">
+                <img src="logo.png">
+            </div>
+            <div>
+                <a id="nav-profile" href="/profile">{{user['first_name']}}</a>
+            </div>
+        </nav>
+    </div>
+  <main>
+    <div class="background-content" id="main-background">
+        <div id="new_review" >
+            <button class="open-button" onclick="openForm()">+</button>
+        </div>
+        <div id="search-and-filter">
+            <form action="/filter_review" method="POST" id="filter-form">
+                <div id="filter-review">
+                    <label for="filter">Filter:</label>
+                    <select id="filter" name="filter" onchange="saveFilterSelection()">
+                        <option>None</option>
+                        <option>Newest</option>
+                        <option>Oldest</option>
+                        <option>A-Z</option>
+                    </select>
+                </div>
+            </form>
+            <form action="/search_review" method="POST">
+                <div id="search-reviews">
+                    <input type="text" placeholder="Search..." name="search_string">
+                    <button class="search"> Go </button>
+                </div>
+            </form>
+            <div id="topic-container">
+            <form action="/load-reviews-by-topic" method="POST" id="topic-select-form">
+                <select id="topic-select" name="topic" onchange="saveTopicSelection()">
+                    <option value="">Select a Topic</option>
+                    <option value="all" selected>All Topics</option>
+                    % for topic in all_topics:
+                        <option value="{{ topic }}">{{ topic }}</option>
+                    % end
+                </select>
+                <button type="button" onclick="openTopicForm()">New Topic</button>
+            </form>
+            <div id="add-topic-form" style="display:none;">
+                <form action="/add-topic" method="POST">
+                    <input type="text" name="new_topic" placeholder="Enter new topic name">
+                    <div id="topic-buttons">
+                    <button type="submit">Submit</button>
+                    <button type="button" onclick="closeTopicForm()" >Cancel</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        <div id="review_page">
+            % for review in reviews:
+            <article class="review_post" style="width: 400px;">
+                <header>
+                    <h3 class="review_item">{{review['topic']}}</h3>
+                    <div class="date">
+                        <aside>{{review['date']}}</aside>
+                    </div>
+                    <div class="written_about">
+                        <p>for: {{review['assignee']}}</p>
+                        <p>rating: {{review['rating']}}</p>
+                    </div>
+                </header>
+                <main>
+                    <p class="review_item">{{review['content']}}</p>
+                    <div id="author-reactions">
+                    <div>
+                        <p>Author:</p>
+                        % if not review['is_anonymous']:
+                            <p>{{review['author']}}</p>
+                        % else:
+                            <p>Anonymous</p>
+                        % end
+                    </div>
+                     <form action="/add_reaction" method="post" id="emoji-forms">
+                        <input type="hidden" name="topic" value="{{review['topic']}}">
+                        <input type="hidden" name="author" value="{{review['author']}}">
+                        <input type="hidden" name="date" value="{{review['date']}}">
+                        <div id="emoji-reactions">
+                            <div>
+                                <button id="smile-emoji" type="submit" name="emoji" value="happy">&#x1F600;</button>
+                                <p class="value">{{ review['reactions']['happy'] }}</p>
+                            </div>
+                            <div>
+                                <button id="confused-emoji" type="submit" name="emoji" value="confused">&#x1F928;</button>
+                                <p class="value">{{review['reactions'].get('confused', 0)}}</p>
+                            </div>
+                            <div>
+                                <button id="frown-emoji" type="submit" name="emoji" value="sad">&#x1F641;</button>
+                                <p class="value">{{review['reactions'].get('sad', 0)}}</p>
+                            </div>
+                            <div>
+                                <button id="thumbs-up-emoji" type="submit" name="emoji" value="thumbsup">&#x1F44D;</button>
+                                <p class="value">{{review['reactions'].get('thumbsup', 0)}}</p>
+                            </div>
+                            <div>
+                                <button id="thumbs-down-emoji" type="submit" name="emoji" value="thumbsdown">&#x1F44E;</button>
+                                <p class="value">{{review['reactions'].get('thumbsdown', 0)}}</p>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </main>
+            </article>
+            %end
+        </div>
+    </div>
+  </main>
+    <div class="form-popup" id="myForm">
+        <form action="/add" method="POST" class="form-container">
+            <h2>Create New Review</h2>
+            <div id="form-items">
+                <div id="topic-assignee">
+                    <div>
+                        <label><b>Topic</b></label>
+                        <select name="topic" class="topic" required>
+                            <option value="">Select a Topic</option>
+                            % for topic in all_topics:
+                                <option value="{{ topic }}">{{ topic }}</option>
+                            % end
+                        </select>
+                    </div>
+                    <div id="assignee">
+                        <label><b>Assignee</b></label>
+                        <input type="hidden" id="assigneeInput" name="assignee" value="">
+                        <button id="assigness-button" type="button" name="assignee" onclick="openFormAssign()">
+                            <span id="assigneeSpan">Assign...</span></button>
+                    </div>
+                </div>
+                <div>
+                    <label><b>Content</b></label>
+                    <textarea type="text" placeholder="Start Writing Here..." name="content" required></textarea>
+                </div>
+                <div id="rating-system">
+                <p>Rating Out of 5:</p>
+                <div class="rating-system2">
+                  <input type="radio" name='rating' value="5" class ="star" id="star5_2" />
+                  <label class="star-label" for="star5_2"></label>
+
+                  <input type="radio" name='rating' value="4" id="star4_2" class ="star"/>
+                  <label class="star-label" for="star4_2"></label>
+
+                  <input type="radio" name='rating' value="3" id="star3_2" class ="star"/>
+                  <label class="star-label" for="star3_2"></label>
+
+                  <input type="radio" name='rating' value="2" id="star2_2" class ="star"/>
+                  <label class="star-label" for="star2_2"></label>
+
+                  <input type="radio" name='rating' value="1" id="star1_2" class ="star" required/>
+                  <label class="star-label" for="star1_2"></label>
+
+                  <div class="text"></div>
+                </div>
+                </div>
+                <div>
+                    <div id="form-buttons">
+                        <div id="form-checkbox">
+                        <div class="checkbox">
+                        <input type="checkbox" name="draft">
+                        <p>Save as draft?</p>
+                        </div>
+                        <div class="checkbox">
+                        <input type="checkbox" name="anonymous">
+                        <p>Post anonymously?</p>
+                        </div>
+                        </div>
+                        <div id="post-buttons">
+                        <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+                        <button type="submit" class="btn">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="getAssignee">
+        <div id="assign-container">
+            <input type="text" placeholder="Search..." name="search-assign" required>
+            <div id="checkbox-container">
+                 % for account in all_users:
+                <div id="assign-checkbox">
+                    <input type="radio" name="assignee" value="{{ account.full_name }}" id="assignee-{{ account.full_name }}" onclick="selectAssignee('{{ account.full_name }}')">
+                    <label for="assignee-{{ account.full_name }}">{{ account.full_name }}</label>
+                </div>
+                 % end
+            </div>
+            <div id="assign-buttons">
+                <button type="button" class="btn cancel" onclick="closeFormAssign()">Ok</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

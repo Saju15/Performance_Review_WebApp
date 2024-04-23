@@ -1,0 +1,155 @@
+[
+  {
+    "date": "2023-10-14 11:09:16.973931",
+    "topic": "Performance Review: Dark Arts",
+    "content": "Draco's understanding and application of the Dark Arts principles have shown a remarkable improvement this term.",
+    "author": "theboywholived",
+    "assignee": "Draco Malfoy",
+    "rating": "5",
+    "is_anonymous": true,
+    "reactions": {
+      "happy": 12,
+      "confused": 7,
+      "sad": 4,
+      "thumbsup": 4,
+      "thumbsdown": 2
+    },
+    "is_published": true
+  },
+  {
+    "date": "2023-09-16 21:43:16.973931",
+    "topic": "Performance Review: Potions",
+    "content": "Harry has demonstrated a keen aptitude for potion-making, often going beyond the standard recipes to experiment with innovative concoctions.",
+    "author": "brightestwitch",
+    "assignee": "Harry Potter",
+    "rating": "5",
+    "is_anonymous": true,
+    "reactions": {
+      "happy": 1,
+      "confused": 2,
+      "sad": 1,
+      "thumbsup": 2,
+      "thumbsdown": 0
+    },
+    "is_published": true
+  },
+  {
+    "date": "2023-08-23 21:43:11.973931",
+    "topic": "Performance Review: Transfiguration",
+    "content": "Hermione's transfiguration skills are, as expected, top of the class. Her ability to apply theory to practice is unparalleled.",
+    "author": "ron_weasley",
+    "assignee": "Hermoine Granger",
+    "rating": "5",
+    "is_anonymous": false,
+    "reactions": {
+      "happy": 0,
+      "confused": 0,
+      "sad": 0,
+      "thumbsup": 0,
+      "thumbsdown": 0
+    },
+    "is_published": false
+  },
+  {
+    "date": "2023-07-03 21:13:16.973931",
+    "topic": "Performance Review: Charms",
+    "content": "Ron's charm work has shown consistent improvement, especially with complex spells that require a delicate touch.",
+    "author": "theboywholived",
+    "assignee": "Ron Weasley",
+    "rating": "5",
+    "is_anonymous": false,
+    "reactions": {
+      "happy": 1,
+      "confused": 1,
+      "sad": 0,
+      "thumbsup": 0,
+      "thumbsdown": 0
+    },
+    "is_published": true
+  },
+  {
+    "date": "2023-06-19 05:43:16.973931",
+    "topic": "Performance Review: Herbology",
+    "content": "Hermione's methodical approach to Herbology has yielded a deep understanding of magical plants and their care.",
+    "author": "purebloodprince",
+    "assignee": "Hermoine Granger",
+    "rating": "5",
+    "is_anonymous": true,
+    "reactions": {
+      "happy": 0,
+      "confused": 0,
+      "sad": 0,
+      "thumbsup": 0,
+      "thumbsdown": 0
+    },
+    "is_published": true
+  },
+  {
+    "date": "2023-05-05 21:43:16.973931",
+    "topic": "Performance Review: Quidditch",
+    "content": "Harry's leadership and skill as a Seeker have been instrumental in Gryffindor's recent successes on the Quidditch pitch.",
+    "author": "ron_weasley",
+    "assignee": "Harry Potter",
+    "rating": "5",
+    "is_anonymous": false,
+    "reactions": {
+      "happy": 0,
+      "confused": 0,
+      "sad": 0,
+      "thumbsup": 0,
+      "thumbsdown": 0
+    },
+    "is_published": true
+  },
+  {
+    "date": "2023-04-18 11:23:16.973931",
+    "topic": "Performance Review: Study Habits",
+    "content": "Hermione's study habits set a benchmark for her peers. Her organization and dedication to learning are exemplary.",
+    "author": "purebloodprince",
+    "assignee": "Hermoine Granger",
+    "rating": "5",
+    "is_anonymous": false,
+    "reactions": {
+      "happy": 0,
+      "confused": 0,
+      "sad": 0,
+      "thumbsup": 0,
+      "thumbsdown": 0
+    },
+    "is_published": true
+  },
+  {
+    "date": "2023-03-13 18:43:16.973931",
+    "topic": "Performance Review: Dueling Club",
+    "content": "Ron has shown great courage and strategic thinking in the Dueling Club, often outmaneuvering more experienced opponents.",
+    "author": "theboywholived",
+    "assignee": "Ron Weasley",
+    "rating": "5",
+    "is_anonymous": false,
+    "reactions": {
+      "happy": 0,
+      "confused": 0,
+      "sad": 0,
+      "thumbsup": 0,
+      "thumbsdown": 0
+    },
+    "is_published": true
+  },
+  {
+    "date": "2023-02-29 21:13:16.973931",
+    "topic": "Performance Review: Magical Theory",
+    "content": "Hermione's grasp of magical theory is impressive, often providing insights that challenge even our professors' understanding.",
+    "author": "brightestwitch",
+    "assignee": "Ron Weasley",
+    "rating": "5",
+    "is_anonymous": false,
+    "reactions": {
+      "happy": 0,
+      "confused": 0,
+      "sad": 0,
+      "thumbsup": 0,
+      "thumbsdown": 0
+    },
+    "is_published": true
+  }
+]

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="text/babel">
+      function Page() {
+        const [currentPage, setPage] = React.useState("login");
+        if (currentPage === "login") {
+          return (
+            <div className="App">
+              <h1 id = "sign_in_title">Sign in</h1>
+              <form class = "sign_login_form" action="/login" method="POST">
+                <label>
+                  <span>Username:</span>
+                  <input name = "username" type="text"/>
+                </label>
+                <label>
+                  <span>Password:</span>
+                  <input name="password" type="password" />
+                </label>
+                <button id = "sign_in" type="submit">Sign in</button>
+                <p id = "sign_up">
+                  No account?{" "}
+                  <button onClick={() => setPage("signup")}>Sign up</button>
+                </p>
+              </form>
+            </div>
+          );
+        } else if (currentPage === "signup") {
+          return (
+            <div className="App">
+              <h1 id="sign-up-title">Sign up</h1>
+              <form class = "sign_login_form" action="/signup" method="POST">
+                <label>
+                  First Name:
+                  <input name="firstname" type="text" />
+                </label>
+                <label>
+                  Last name:
+                  <input name="lastname" type="text" />
+                </label>
+                <label>
+                  Email:
+                  <input name="email" type="text" />
+                </label>
+                <label>
+                  Username:
+                  <input name="username" type="text" />
+                </label>
+                <label>
+                  Password:
+                  <input name="password" type="password" />
+                </label>
+                <label>
+                  Team:
+                  <input name="team" type="text" />
+                </label>
+                <div id="sign_up_login">
+                  <button onClick={() => setPage("login")}>Back to Login</button>
+                  <button type="submit">Sign Up</button>
+                </div>
+              </form>
+            </div>
+          );
+        }
+      }
+
+      function sign_in() {
+        // Add your sign-in logic here
+      }
+
+      // Render the component
+      ReactDOM.render(<Page />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
